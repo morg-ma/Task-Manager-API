@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/morg-ma/express_practice.git"
+    "url": "git+https://github.com/morg-ma/Task-Manager-API.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/morg-ma/express_practice/issues"
+    "url": "https://github.com/morg-ma/Task-Manager-API/issues"
   },
-  "homepage": "https://github.com/morg-ma/express_practice#readme",
+  "homepage": "https://github.com/morg-ma/Task-Manager-API#readme",
   "dependencies": {
     "better-auth": "^1.2.3",
     "dotenv": "^16.4.7",
