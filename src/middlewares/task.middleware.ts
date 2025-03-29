@@ -12,11 +12,12 @@ export const validateTaskId = async (
   next: NextFunction
 ) => {
   try {
-    const id = Number(req.params.id);
-    if (!id) throw new Error("Task ID is required!");
+    const taskId = Number(req.params.id);
+    const userId = req.user.id;
+    if (!taskId) throw new Error("Task ID is required!");
 
-    if (isNaN(Number(id))) throw new Error("Task ID must be a number!");
-    if (!(await taskIdExists(id)))
+    if (isNaN(Number(taskId))) throw new Error("Task ID must be a number!");
+    if (!(await taskIdExists(taskId, userId)))
       return res.status(404).json({ errorMessage: "Task not found!" });
     next();
   } catch (err: any) {
@@ -31,6 +32,7 @@ export const validateInsertTask = async (
 ) => {
   try {
     const task = req.body;
+    task.userId = req.user.id;
     const parsedTask = await taskInsertSchema.safeParseAsync(task);
     if (!parsedTask.success) throw fromZodError(parsedTask.error);
     req.body.task = parsedTask.data;
@@ -47,12 +49,14 @@ export const validateUpdateTask = async (
 ) => {
   try {
     const task = req.body;
-    const id = Number(req.params.id);
-    if (!id) throw new Error("Task ID is required!");
+    const taskId = Number(req.params.id);
+    const userId = req.user.id;
+    task.userId = userId;
+    if (!taskId) throw new Error("Task ID is required!");
 
-    if (isNaN(Number(id))) throw new Error("Task ID must be a number!");
+    if (isNaN(Number(taskId))) throw new Error("Task ID must be a number!");
 
-    if (!(await taskIdExists(id)))
+    if (!(await taskIdExists(taskId, userId)))
       return res.status(404).json({ errorMessage: "Task not found!" });
 
     const parsedTask = await taskUpdateSchema.safeParseAsync(task);
