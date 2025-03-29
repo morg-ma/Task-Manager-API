@@ -1,9 +1,8 @@
-import { Router } from "express"; 
+import express, { Router } from "express"; 
 import { toNodeHandler } from 'better-auth/node';
-import { auth } from "../utils/auth";
-import * as authHandler from '../handlers/auth';
-import { isAuthenticated } from "../middlewares/isAuthenticated";
-import express from "express";
+import { auth } from "../utils/auth.config";
+import * as authHandler from '../handlers/auth.handler';
+import { isAuthenticated } from "../middlewares/auth.middleware";
 
 const router = Router();
 

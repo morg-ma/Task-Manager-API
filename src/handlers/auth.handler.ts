@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { auth } from "../utils/auth";
+import { auth } from "../utils/auth.config";
 import { fromNodeHeaders } from "better-auth/node";
 
 export async function signIn(req: Request, res: Response) {

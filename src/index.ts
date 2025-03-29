@@ -1,6 +1,6 @@
 import express from "express";
 import 'dotenv/config';
-import authRouter from './routes/auth';
+import authRouter from './routes/auth.route';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
