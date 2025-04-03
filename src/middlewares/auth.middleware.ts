@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { auth } from "../utils/auth.config";
+import { auth } from "../config/auth.config";
 import { fromNodeHeaders } from "better-auth/node";
 
 declare module "express" {

@@ -1,5 +1,5 @@
 import { betterAuth } from 'better-auth';
-import { db } from '../config/db';
+import { db } from './db.config';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 
 export const auth = betterAuth({
