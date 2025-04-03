@@ -1,25 +1,24 @@
 import {
   pgTable,
   text,
-//   integer,
+  integer,
   timestamp,
   boolean,
   pgEnum,
-  integer,
 } from "drizzle-orm/pg-core";
 
 
 //////////////////////////  Users /////////////////////////////
-export const users = pgTable("users", {
+export const user = pgTable("users", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").notNull(),
-//   image: text("image"),
+  image: text("image"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
   phoneNumber: text("phone_number").unique(),
-  phoneNumberVerified: boolean("phone_number_verified").notNull(),
+  phoneNumberVerified: boolean("phone_number_verified").notNull().default(false),
 });
 
 export const session = pgTable("session", {
@@ -32,7 +31,7 @@ export const session = pgTable("session", {
   userAgent: text("user_agent"),
   userId: text("user_id")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => user.id, { onDelete: "cascade" }),
 });
 
 export const account = pgTable("account", {
@@ -41,7 +40,7 @@ export const account = pgTable("account", {
   providerId: text("provider_id").notNull(),
   userId: text("user_id")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => user.id, { onDelete: "cascade" }),
   accessToken: text("access_token"),
   refreshToken: text("refresh_token"),
   idToken: text("id_token"),
@@ -66,8 +65,8 @@ export const verification = pgTable("verification", {
 export const taskStatusEnum = pgEnum("task_status", ["pending", "in_progress", "completed"]);
 
 export const tasks = pgTable("tasks", {
-  id: integer("id").primaryKey(),
-  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
   description: text("description"),
   status: taskStatusEnum("status").default("pending"),
